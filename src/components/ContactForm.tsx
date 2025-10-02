@@ -1,0 +1,220 @@
+import React, { useState, useRef, useEffect } from 'react';
+import { useForm, ValidationError } from '@formspree/react';
+import { Send, CheckCircle, AlertCircle } from 'lucide-react';
+
+const ContactForm = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [state, handleSubmit] = useForm("mgvnyldv");
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <section
+      ref={sectionRef}
+      id="contact"
+      className="py-24"
+      style={{ backgroundColor: '#FAF9F6' }}
+    >
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4">
+            Let's Build Something Amazing
+          </h2>
+          <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+            Ready to start your next project? Fill out the form below and let's discuss how we can help bring your vision to life.
+          </p>
+        </div>
+
+        <div
+          className={`bg-white rounded-3xl shadow-xl p-8 md:p-12 transform transition-all duration-700 ${
+            isVisible
+              ? 'translate-y-0 opacity-100'
+              : 'translate-y-12 opacity-0'
+          }`}
+        >
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Name */}
+              <div className="group">
+                <label htmlFor="name" className="block text-sm font-semibold text-slate-700 mb-2">
+                  Full Name *
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 group-hover:border-slate-300"
+                  placeholder="Enter your full name"
+                />
+                <ValidationError
+                  prefix="Name"
+                  field="name"
+                  errors={state.errors}
+                  className="text-red-500 text-sm mt-1"
+                />
+              </div>
+
+              {/* Date of Birth */}
+              <div className="group">
+                <label htmlFor="dob" className="block text-sm font-semibold text-slate-700 mb-2">
+                  Date of Birth
+                </label>
+                <input
+                  type="date"
+                  id="dob"
+                  name="dob"
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 group-hover:border-slate-300"
+                />
+                <ValidationError
+                  prefix="Dob"
+                  field="dob"
+                  errors={state.errors}
+                  className="text-red-500 text-sm mt-1"
+                />
+              </div>
+
+              {/* Education */}
+              <div className="group">
+                <label htmlFor="education" className="block text-sm font-semibold text-slate-700 mb-2">
+                  Education Status
+                </label>
+                <select
+                  id="education"
+                  name="education"
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 group-hover:border-slate-300"
+                >
+                  <option value="">Select education status</option>
+                  <option value="Student">Student</option>
+                  <option value="Completed">Completed</option>
+                </select>
+                <ValidationError
+                  prefix="Education"
+                  field="education"
+                  errors={state.errors}
+                  className="text-red-500 text-sm mt-1"
+                />
+              </div>
+
+              {/* Phone */}
+              <div className="group">
+                <label htmlFor="phone" className="block text-sm font-semibold text-slate-700 mb-2">
+                  Phone Number
+                </label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 group-hover:border-slate-300"
+                  placeholder="Enter your phone number"
+                />
+                <ValidationError
+                  prefix="Phone"
+                  field="phone"
+                  errors={state.errors}
+                  className="text-red-500 text-sm mt-1"
+                />
+              </div>
+
+              {/* Email */}
+              <div className="group md:col-span-2">
+                <label htmlFor="email" className="block text-sm font-semibold text-slate-700 mb-2">
+                  Email Address *
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 group-hover:border-slate-300"
+                  placeholder="Enter your email address"
+                />
+                <ValidationError
+                  prefix="Email"
+                  field="email"
+                  errors={state.errors}
+                  className="text-red-500 text-sm mt-1"
+                />
+              </div>
+            </div>
+
+            {/* Project Details */}
+            <div className="group">
+              <label htmlFor="projectDetails" className="block text-sm font-semibold text-slate-700 mb-2">
+                Project Details *
+              </label>
+              <textarea
+                id="projectDetails"
+                name="projectDetails"
+                required
+                rows={6}
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 group-hover:border-slate-300 resize-none"
+                placeholder="Tell us about your project ideas, requirements, timeline, and budget..."
+              />
+              <ValidationError
+                prefix="Project Details"
+                field="projectDetails"
+                errors={state.errors}
+                className="text-red-500 text-sm mt-1"
+              />
+            </div>
+
+            {/* Submit Button */}
+            <div className="flex flex-col items-center space-y-4">
+              <button
+                type="submit"
+                disabled={state.submitting}
+                className="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold rounded-full hover:shadow-xl hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+              >
+                {state.submitting ? (
+                  <>
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                    Submitting...
+                  </>
+                ) : (
+                  <>
+                    Send Message
+                    <Send className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                  </>
+                )}
+              </button>
+
+              {/* Status Messages */}
+              {state.succeeded && (
+                <div className="flex items-center text-green-600 bg-green-50 px-4 py-2 rounded-lg">
+                  <CheckCircle className="h-5 w-5 mr-2" />
+                  Message sent successfully! We'll get back to you soon.
+                </div>
+              )}
+
+              {state.errors && Object.keys(state.errors).length > 0 && (
+                <div className="flex items-center text-red-600 bg-red-50 px-4 py-2 rounded-lg">
+                  <AlertCircle className="h-5 w-5 mr-2" />
+                  There was an error sending your message. Please try again.
+                </div>
+              )}
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default ContactForm;
