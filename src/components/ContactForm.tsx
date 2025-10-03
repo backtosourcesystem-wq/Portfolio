@@ -84,7 +84,7 @@ const ContactForm = () => {
                   name="education"
                   value={educationStatus}
                   onChange={(e) => setEducationStatus(e.target.value)}
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 group-hover:border-slate-300"
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 group-hover:border-slate-300"
                 >
                   <option value="">Select education status</option>
                   <option value="Student">Student</option>
