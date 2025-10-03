@@ -28,7 +28,7 @@ const ReviewsComments = () => {
 
   const fetchReviews = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/reviews');
+      const response = await fetch('/api/reviews');
       const data = await response.json();
       if (data.reviews) {
         setReviews(data.reviews);
@@ -96,7 +96,7 @@ const ReviewsComments = () => {
     setSubmitLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/reviews', {
+      const response = await fetch('/api/reviews', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
