@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff, LogIn, User, ArrowLeft } from 'lucide-react';
-import logo from '../assets/images/logo.png';
 
 interface LoginProps {
   onLoginSuccess?: () => void;
@@ -68,7 +67,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
         <div className="text-center mb-2">
           <div className="inline-flex items-center justify-center mb-1">
             <img
-              src={logo}
+              src="/images/logo.png"
               alt="Back To Source System"
               className="w-56 h-56 object-contain transform scale-200"
             />

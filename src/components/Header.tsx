@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, User, LogOut } from 'lucide-react';
-import logo from '../assets/images/logo.png';
 
 interface HeaderProps {
   user?: any;
@@ -36,7 +35,7 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout, onShowLogin }) => {
         <div className="flex justify-between items-center py-0">
           <div className="flex items-center space-x-2">
             <img
-              src={logo}
+              src="/images/logo.png"
               alt="B2S Logo"
               className="h-10 w-10 md:h-16 md:w-16 object-contain transform scale-110"
             />

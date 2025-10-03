@@ -153,7 +153,7 @@ const About = ({ onShowLogin }: { onShowLogin: () => void }) => {
             <div className="relative group">
               <div className="w-72 h-72 bg-white/20 backdrop-blur-lg rounded-3xl flex items-center justify-center shadow-lg group-hover:shadow-[0_0_20px_rgba(251,146,60,0.3)] transition-shadow border border-white/50">
                 <img
-                  src="/src/assets/images/logo.png"
+                  src="/images/logo.png"
                   alt="Company Logo"
                   className="w-60 h-60 object-contain transform group-hover:scale-110 transition-transform"
                 />

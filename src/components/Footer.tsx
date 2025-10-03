@@ -1,5 +1,4 @@
 import { Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
-import logo from '../assets/images/logo.png';
 
 const Footer = () => {
   const scrollToSection = (sectionId: string) => {
@@ -16,7 +15,7 @@ const Footer = () => {
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-2 mb-6">
               <img
-                src={logo}
+                src="/images/logo.png"
                 alt="B2S Logo"
                 className="h-16 w-16 object-contain transform scale-110"
               />
