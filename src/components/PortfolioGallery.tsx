@@ -6,6 +6,18 @@ const PortfolioGallery = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Check if mobile device
+    const checkMobile = () => {
+      const isMobileDevice = window.innerWidth < 768;
+      if (isMobileDevice) {
+        setIsVisible(true);
+        return;
+      }
+    };
+
+    // Set initial visibility based on screen size
+    checkMobile();
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -19,7 +31,9 @@ const PortfolioGallery = () => {
       observer.observe(sectionRef.current);
     }
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+    };
   }, []);
 
   const projects = [
