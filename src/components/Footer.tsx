@@ -61,17 +61,17 @@ const Footer = () => {
               <div className="flex items-start space-x-3">
                 <MapPin className="h-5 w-5 text-orange-500 mt-1" />
                 <div>
-                  <p className="text-slate-400">123 Tech Street</p>
-                  <p className="text-slate-400">Innovation City, IC 12345</p>
+                  <p className="text-slate-400">Bengoli Camp</p>
+                  <p className="text-slate-400">Chandrapur-442401</p>
                 </div>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="h-5 w-5 text-orange-500" />
-                <p className="text-slate-400">9823413834, 8421822</p>
+                <p className="text-slate-400">9823413834, 8421822204</p>
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 text-orange-500" />
-                <p className="text-slate-400">backtosource13@gmail.com</p>
+                <p className="text-slate-400">backtosourcesystem@gmail.com</p>
               </div>
             </div>
           </div>
@@ -83,7 +83,7 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-slate-400 text-sm">
-              © 2024 Back to source system. All rights reserved.
+              © 2025 Back to source system. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <button className="text-slate-400 hover:text-white text-sm transition-colors">
