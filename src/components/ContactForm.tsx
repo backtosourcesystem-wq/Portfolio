@@ -4,6 +4,7 @@ import { Send, CheckCircle, AlertCircle } from 'lucide-react';
 
 const ContactForm = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [educationStatus, setEducationStatus] = useState('');
   const [state, handleSubmit] = useForm("mgvnyldv");
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -71,24 +72,7 @@ const ContactForm = () => {
                 />
               </div>
 
-              {/* Date of Birth */}
-              <div className="group">
-                <label htmlFor="dob" className="block text-sm font-semibold text-slate-700 mb-2">
-                  Date of Birth
-                </label>
-                <input
-                  type="date"
-                  id="dob"
-                  name="dob"
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 group-hover:border-slate-300"
-                />
-                <ValidationError
-                  prefix="Dob"
-                  field="dob"
-                  errors={state.errors}
-                  className="text-red-500 text-sm mt-1"
-                />
-              </div>
+
 
               {/* Education */}
               <div className="group">
@@ -98,6 +82,8 @@ const ContactForm = () => {
                 <select
                   id="education"
                   name="education"
+                  value={educationStatus}
+                  onChange={(e) => setEducationStatus(e.target.value)}
                   className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 group-hover:border-slate-300"
                 >
                   <option value="">Select education status</option>
@@ -153,6 +139,72 @@ const ContactForm = () => {
                 />
               </div>
             </div>
+
+            {/* Conditional Fields */}
+            {educationStatus === 'Student' && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* College Name */}
+                <div className="group">
+                  <label htmlFor="collegeName" className="block text-sm font-semibold text-slate-700 mb-2">
+                    College Name
+                  </label>
+                  <input
+                    type="text"
+                    id="collegeName"
+                    name="collegeName"
+                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 group-hover:border-slate-300"
+                    placeholder="Enter your college name"
+                  />
+                  <ValidationError
+                    prefix="College Name"
+                    field="collegeName"
+                    errors={state.errors}
+                    className="text-red-500 text-sm mt-1"
+                  />
+                </div>
+
+                {/* Branch */}
+                <div className="group">
+                  <label htmlFor="branch" className="block text-sm font-semibold text-slate-700 mb-2">
+                    Branch
+                  </label>
+                  <input
+                    type="text"
+                    id="branch"
+                    name="branch"
+                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 group-hover:border-slate-300"
+                    placeholder="Enter your branch"
+                  />
+                  <ValidationError
+                    prefix="Branch"
+                    field="branch"
+                    errors={state.errors}
+                    className="text-red-500 text-sm mt-1"
+                  />
+                </div>
+              </div>
+            )}
+
+            {educationStatus === 'Completed' && (
+              <div className="group">
+                <label htmlFor="organizationName" className="block text-sm font-semibold text-slate-700 mb-2">
+                  Organization Name
+                </label>
+                <input
+                  type="text"
+                  id="organizationName"
+                  name="organizationName"
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 group-hover:border-slate-300"
+                  placeholder="Enter your organization name"
+                />
+                <ValidationError
+                  prefix="Organization Name"
+                  field="organizationName"
+                  errors={state.errors}
+                  className="text-red-500 text-sm mt-1"
+                />
+              </div>
+            )}
 
             {/* Project Details */}
             <div className="group">
