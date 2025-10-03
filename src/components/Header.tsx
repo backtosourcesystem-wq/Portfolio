@@ -38,9 +38,9 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout, onShowLogin }) => {
             <img
               src={logo}
               alt="B2S Logo"
-              className="h-16 w-16 object-contain transform scale-110"
+              className="h-10 w-10 md:h-16 md:w-16 object-contain transform scale-110"
             />
-            <h2 className="text-2xl font-bold text-slate-800 nanum-myeongjo-regular">Back To Source System</h2>
+            <h2 className="text-base md:text-2xl font-bold text-slate-800 nanum-myeongjo-regular">Back To Source System</h2>
           </div>
 
           {/* Desktop Navigation */}
