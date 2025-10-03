@@ -1,6 +1,141 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useForm, ValidationError } from '@formspree/react';
-import { Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { Send, CheckCircle, AlertCircle, ChevronDown } from 'lucide-react';
+
+// Custom Dropdown Component
+interface CustomDropdownProps {
+  id: string;
+  name: string;
+  value: string;
+  onChange: (value: string) => void;
+  options: { value: string; label: string }[];
+  placeholder?: string;
+  required?: boolean;
+  label: string;
+}
+
+const CustomDropdown: React.FC<CustomDropdownProps> = ({
+  id,
+  name,
+  value,
+  onChange,
+  options,
+  placeholder = "Select an option",
+  required = false,
+  label
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [highlightedIndex, setHighlightedIndex] = useState(-1);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const selectedOption = options.find(option => option.value === value);
+
+  const handleToggle = () => setIsOpen(!isOpen);
+
+  const handleSelect = (optionValue: string) => {
+    onChange(optionValue);
+    setIsOpen(false);
+    setHighlightedIndex(-1);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      if (!isOpen) {
+        setIsOpen(true);
+        setHighlightedIndex(0);
+      } else {
+        setHighlightedIndex(prev =>
+          prev < options.length - 1 ? prev + 1 : 0
+        );
+      }
+    } else if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      if (isOpen) {
+        setHighlightedIndex(prev =>
+          prev > 0 ? prev - 1 : options.length - 1
+        );
+      }
+    } else if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      if (isOpen && highlightedIndex >= 0) {
+        handleSelect(options[highlightedIndex].value);
+      } else {
+        setIsOpen(!isOpen);
+      }
+    } else if (event.key === 'Escape') {
+      setIsOpen(false);
+      setHighlightedIndex(-1);
+    }
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+        setHighlightedIndex(-1);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  return (
+    <div className="group relative">
+      <label htmlFor={id} className="block text-sm font-semibold text-slate-700 mb-2">
+        {label}{required && ' *'}
+      </label>
+      <div ref={dropdownRef} className="relative">
+        {/* Hidden input for form submission */}
+        <input
+          type="hidden"
+          name={name}
+          value={value}
+          required={required}
+        />
+
+        {/* Dropdown trigger */}
+        <button
+          id={id}
+          type="button"
+          onClick={handleToggle}
+          onKeyDown={handleKeyDown}
+          className={`w-full px-4 py-3 bg-slate-50 border text-left rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 group-hover:border-slate-300 cursor-pointer flex items-center justify-between ${
+            value ? 'text-slate-800' : 'text-slate-400'
+          }`}
+        >
+          <span>{selectedOption?.label || placeholder}</span>
+          <ChevronDown className={`w-5 h-5 text-slate-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+        </button>
+
+        {/* Dropdown menu */}
+        {isOpen && (
+          <div className="absolute z-50 w-full mt-1 bg-white border border-slate-200 rounded-xl shadow-xl">
+            <div className="py-1">
+              {options.map((option, index) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => handleSelect(option.value)}
+                  onMouseEnter={() => setHighlightedIndex(index)}
+                  className={`w-full px-4 py-3 text-left hover:bg-orange-50 hover:text-orange-700 transition-colors duration-150 rounded-lg ${
+                    option.value === value
+                      ? 'bg-orange-100 text-orange-700'
+                      : highlightedIndex === index
+                        ? 'bg-slate-100'
+                        : 'text-slate-700'
+                  }`}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
 
 const ContactForm = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -74,29 +209,25 @@ const ContactForm = () => {
 
 
 
-              {/* Education */}
-              <div className="group">
-                <label htmlFor="education" className="block text-sm font-semibold text-slate-700 mb-2">
-                  Education Status
-                </label>
-                <select
-                  id="education"
-                  name="education"
-                  value={educationStatus}
-                  onChange={(e) => setEducationStatus(e.target.value)}
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 group-hover:border-slate-300"
-                >
-                  <option value="">Select education status</option>
-                  <option value="Student">Student</option>
-                  <option value="Completed">Completed</option>
-                </select>
-                <ValidationError
-                  prefix="Education"
-                  field="education"
-                  errors={state.errors}
-                  className="text-red-500 text-sm mt-1"
-                />
-              </div>
+              {/* Education - Custom Dropdown */}
+              <CustomDropdown
+                id="education"
+                name="education"
+                label="Education Status"
+                value={educationStatus}
+                onChange={setEducationStatus}
+                placeholder="Select education status"
+                options={[
+                  { value: "Student", label: "Student" },
+                  { value: "Completed", label: "Completed" }
+                ]}
+              />
+              <ValidationError
+                prefix="Education"
+                field="education"
+                errors={state.errors}
+                className="text-red-500 text-sm mt-1"
+              />
 
               {/* Phone */}
               <div className="group">
